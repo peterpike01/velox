@@ -64,7 +64,7 @@ import java.util.concurrent.Executors
 class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var videoCapture: VideoCapture<Recorder>? = null
     private var recording: Recording? = null
-    private lateinit var cameraExecutor: ExecutorService
+  //  private lateinit var cameraExecutor: ExecutorService
     private lateinit var media3Effect : Media3Effect
     private lateinit var useCaseGroupBuilder : UseCaseGroup.Builder
     private lateinit var viewBinding: ActivityMainBinding
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
         viewBinding.quitButton.setOnClickListener {   finish() }
 
-        cameraExecutor = Executors.newSingleThreadExecutor()
+      //  cameraExecutor = Executors.newSingleThreadExecutor()
 
         tts = TextToSpeech(this, this)
 
@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        cameraExecutor.shutdown()
+     //   cameraExecutor.shutdown()
         fusedLocationClient.removeLocationUpdates(locationCallback)
         if (tts != null) { tts!!.stop(); tts!!.shutdown() }
     }
@@ -199,7 +199,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             return
         }
         // create and start a new recording session
-        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())
+        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.GERMANY).format(System.currentTimeMillis())
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4")
@@ -232,10 +232,11 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     }
                     is VideoRecordEvent.Finalize -> {
                         if (!recordEvent.hasError()) {
-                            val msg = "Video capture succeeded: ${recordEvent.outputResults.outputUri}"
-                            Toast.makeText(baseContext, msg, Toast.LENGTH_LONG)
-                            Toast.makeText(baseContext, msg, Toast.LENGTH_LONG)
-                                .show()
+                       //     val msg = "Video capture succeeded: ${recordEvent.outputResults.outputUri}"
+                            val msg = "Video captured to Mainstorage/Videos/velox/"+name+".mp4"
+                            Toast.makeText(baseContext, msg, Toast.LENGTH_LONG).show()
+                            Toast.makeText(baseContext, msg, Toast.LENGTH_LONG).show()
+                            Toast.makeText(baseContext, msg, Toast.LENGTH_LONG).show()
                             Log.d(TAG, msg)
                         } else {
                             recording?.close()
